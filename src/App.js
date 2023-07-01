@@ -3,11 +3,10 @@ import { useEffect, useState } from 'react';
 
 function App() {
   const [data, setData] = useState([]);
-  const [page, setPage] = useState(16);
+  const [page, setPage] = useState(1);
 
   const componentDidMount = () => {
     fetch(`http://localhost:5000/data/${page}`).then(res => res.json()).then((data) => {
-      console.log(data)
       setData(data.nodes);
     })
   }
@@ -34,12 +33,12 @@ function App() {
     return updated_date.toUTCString();
   }
 
-  console.log(data, page);
+  console.log('on page - ',page);
   return (
     <div className="App">
       <div className='container'>
-        {data && data.map((article) => {
-          return <div className='article'>
+        {data && data.map((article,index) => {
+          return <div className='article' key={index}>
             <img src={article?.node.ImageStyle_thumbnail} style={{ 'width': '30%' }}></img>
             <div >
               <h2>{article?.node.title}</h2>
